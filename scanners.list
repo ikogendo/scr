@@ -16,3 +16,5 @@
 218.56.0.0/14
 # AS197227  POLAND
 145.14.244.0/22
+# For test anti scanning Vorkuta
+78.81.155.212/20
