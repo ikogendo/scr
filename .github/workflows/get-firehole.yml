@@ -1,0 +1,32 @@
+name: Update Firehol IP list
+
+on:
+  schedule:
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Firehol list
+        run: |
+          curl -fsSL https://iplists.firehol.org/files/firehol_level1.netset \
+            -o firehole.list
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add firehole.list
+          git commit -m "Update Firehol IP list"
+          git push
