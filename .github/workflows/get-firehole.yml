@@ -16,17 +16,17 @@ jobs:
       - name: Download Firehol list
         run: |
           curl -fsSL https://iplists.firehol.org/files/firehol_level1.netset \
-            -o firehole.list
+            -o firehol.list  #&& git add firehol.list
 
       - name: Commit and push if changed
         run: |
-          if git diff --quiet; then
-            echo "No changes"
-            exit 0
-          fi
+#          if git diff --quiet; then
+#            echo "No changes"
+#            exit 0
+#          fi
 
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add firehole.list
+          git add firehol.list
           git commit -m "Update Firehol IP list"
           git push
